@@ -10,3 +10,9 @@ print("The sum of 5 and 7 is: " .. sum)
 
 local hello = "Hello, Lua!"
 print(hello)
+
+for i = 1, 5 do
+    print("Count: " .. i)
+end
+
+print("Script finished.")
