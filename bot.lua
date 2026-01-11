@@ -11,4 +11,10 @@ client:on('messageCreate', function(message)
     end
 end)
 
-client:run('MTQ1OTI1MDc4NDY3NDkwNjI2OA.GlfNRh.WPJLa9BBonNtBvDsmay5rPEtg253bAnmAy8dnU')
+-- Use the environment variable BOTKEY instead of hardcoding the token
+local token = os.getenv("BOTKEY")
+if not token then
+    error("BOTKEY environment variable not set!")
+end
+
+client:run(token)
