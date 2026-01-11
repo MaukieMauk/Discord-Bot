@@ -1,0 +1,3 @@
+echo "config.txt" >> .gitignore
+git add .gitignore
+git commit -m "Ignore config.txt containing secrets"
