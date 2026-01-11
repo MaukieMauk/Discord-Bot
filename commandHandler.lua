@@ -4,26 +4,23 @@ local client = discordia.Client()
 client:on('messageCreate', function(message)
     if message.author.bot then return end
 
-    if message.content:match('^!userinfo') then
-        -- Get mentioned user or fallback to author
-        local user
-        for _, u in pairs(message.mentionedUsers) do
-            user = u
-            break
-        end
-        user = user or message.author
+    -- Ping command
+    if message.content == '!ping' then
+        message:reply('Pong!')
+    end
 
+    -- Userinfo command
+    if message.content:match('^!userinfo') then
+        local user = message.mentionedUsers:first() or message.author
         local member = message.guild:getMember(user.id)
 
-        -- Collect roles
         local roles = {}
         if member then
-            for _, role in pairs(member.roles) do
+            for _, role in pairs(member.roles:toArray()) do
                 table.insert(roles, role.name)
             end
         end
 
-        -- Create embed
         local embed = {
             title = user.username .. "'s Info",
             color = 0x00ff00,
@@ -35,7 +32,7 @@ client:on('messageCreate', function(message)
                 {name = "Roles", value = #roles > 0 and table.concat(roles, ", ") or "None", inline = false},
                 {name = "Bot?", value = tostring(user.bot), inline = true}
             },
-            timestamp = os.time()
+            timestamp = os.date("!%Y-%m-%dT%TZ", os.time())
         }
 
         message:reply {embed = embed}
